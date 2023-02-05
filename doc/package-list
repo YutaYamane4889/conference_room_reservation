@@ -1,0 +1,5 @@
+mrs
+mrs.domain.model
+mrs.domain.model.converter
+mrs.domain.repository.user
+mrs.domain.service.user

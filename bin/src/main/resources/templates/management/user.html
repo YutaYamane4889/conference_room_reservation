@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="../../static/js/jquery-2.2.4.min.js"
+	th:src="@{/js/jquery-2.2.4.min.js}"></script>
+<script src="../../static/js/bootstrap.min.js"
+	th:src="@{/js/bootstrap.min.js}"></script>
+<link href="../../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link href="../../static/css/common.css" th:href="@{/css/common.css}"
+	rel="stylesheet" />
+<title>管理画面</title>
+</head>
+<body>
+	<div class="container">
+		<div class="marginh">
+			<h2 class="form-signin-heading">ユーザ検索画面</h2>
+		</div>
+		<div class="center-block">
+			<form th:action="@{/manage}" method="post" class="form-horizontal">
+				<div class="form-group">
+					<label for="name2" class="control-label col-sm-2 marginlabel">ユーザID:</label>
+					<div class="col-sm-4">
+						<input type="text" name="userId" class="form-control margininput">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="name2" class="control-label col-sm-2 marginlabel">ユーザ姓:</label>
+					<div class="col-sm-4">
+						<input type="text" name="lastName"
+							class="form-control margininput">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="name2" class="control-label col-sm-2 marginlabel">ユーザ名:</label>
+					<div class="col-sm-4">
+						<input type="text" name="firstName"
+							class="form-control margininput">
+					</div>
+				</div>
+				<div class="marginh">
+					<input type="submit" value="検索" class="btn btn-info btn-block">
+				</div>
+			</form>
+		</div>
+		<p></p>
+		<p></p>
+
+		<div class="panel panel-primary panelr marginpanel">
+			<div class="panel-heading">ユーザ一覧</div>
+			<table class="table table-striped table-bordered">
+				<tr>
+					<th>ユーザID</th>
+					<th>ユーザ氏名</th>
+				</tr>
+				<tr th:each="obj : ${userList}">
+					<td><a th:href="@{'/edit/{userId}'(userId=${obj.userId})}" th:text="*{obj.userId}"></a></td>
+					<td th:text="|*{obj.lastName} *{obj.firstName}|">
+				</tr>
+			</table>
+			<div class="panel-footer"></div>
+		</div>
+		<div class="marginh paddingtop">
+			<a th:href="@{'/rooms'}" class="btn btn-default" style="width:40%;">戻る</a>
+			<a th:href="@{'/register'}" class="btn btn-success" style="width:55%;">ユーザ新規登録画面へ</a>
+
+		<form role="form" id="logout" th:action="@{/logout}" method="post" class="paddingtop" >
+			<button type="submit" class="btn btn-link">ログアウト</button>
+
+		</form>
+		</div>
+	</div>
+</body>
+</html>

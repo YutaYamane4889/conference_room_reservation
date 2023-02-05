@@ -1,0 +1,109 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.dtlist {
+	margin-bottom: 15px;
+}
+
+ul.link_list a {
+	display: block;
+}
+a:hover {
+	color: #B22222;
+	text-decoration:none;
+}
+li.list-group-item:hover {
+    background: #e6e6e6;
+}
+
+span.dt {
+    font-weight: bold;
+    font-size: large;
+}
+
+
+
+.lnk_list {
+	margin-top:10px;
+	margin-bottom:10px;
+}
+button.btn{
+	margin:20px 0;
+}
+.panelr{
+	margin:0px 350px;
+}
+.marginh{
+	margin:0px 350px;
+}
+.marginb{
+	margin-right:10px;
+	margin-left:30px;
+}
+.marginb2{
+	margin-left:10px;
+}
+.mozipx{
+	font-size: 20px
+}
+.yoyakubtn{
+	width: 180px;
+}
+.button_wrapper{
+   text-align:center;
+}
+.marginlabel{
+	margin:0px 250px;
+}
+.margininput{
+	margin: 0px -270px;
+}
+.paddingtop{
+	padding-top: 40px;
+}
+.mannaka{
+ 	margin:0 auto;
+ 	width: 600px;
+}
+.centering_item {
+    width: 200px;               /* 幅指定 */
+    height: 90px;               /* 高さ指定 */
+    margin:  0 auto;            /* 中央寄せ */
+}

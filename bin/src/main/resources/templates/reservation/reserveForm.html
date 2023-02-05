@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="../../static/js/jquery-2.2.4.min.js" th:src="@{/js/jquery-2.2.4.min.js}" ></script>
+	<script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" ></script>
+	<link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link href="../../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+	<title data-th-text="|*{#temporals.format(date, 'yyyy/MM/dd')}の*{room.roomName}|"></title>
+</head>
+<body th:with="user=${#authentication.principal.user}">
+<div class="container">
+		<div class="marginh">
+			<h2 class="form-signin-heading">会議室の予約画面</h2>
+			<p>30分単位で会議室を予約できます。</p>
+			<a th:href="@{'/rooms'}">会議室一覧画面へ戻る</a>
+			<p></p>
+			<dl class="dl-horizontal">
+			<dt>選択された会議室</dt>
+			<dd th:text="${room.roomName}">
+			<dt>予約者の名前</dt>
+			<dd th:text="|${#authentication.principal.user.lastName} ${#authentication.principal.user.firstName}|">
+			<dt>指定日付</dt>
+			<dd th:text="|*{#temporals.format(date, 'yyyy/MM/dd')}|">
+			<dt>時間帯を選択</dt>
+			<form th:object="${reservationForm}" th:action="@{'/reservations/{date}/{id}'(date=${date},id=${id})}" class="form-inline" method="post">
+
+			<dd>
+			<select th:field="*{startTime}" class="form-control">
+            <option
+                th:each="time : ${timeList}"
+                th:value="${time}"
+                th:text="${time}"
+                >
+            </option>
+        </select>
+		-
+        <select th:field="*{endTime}" class="form-control">
+            <option
+                th:each="time : ${timeList}"
+                th:value="${time}"
+                th:text="${time}"
+                >
+            </option>
+        </select></dd>
+        <br>
+        <span style="color:#ff0000;"><p th:each="error : ${#fields.detailedErrors()}"
+        	class ="err" th:text="${error.message}"></p><p th:text="${err}"></p></span>
+			</dl>
+			<div class="button_wrapper">
+    			<button type="submit" class="btn btn-primary yoyakubtn">予約する</button>
+    		</div>
+    		</form>
+		<div class = "panel panel-primary">
+			<div class = "panel-heading">
+    			<p th:text="|*{#temporals.format(date, 'yyyy/MM/dd')}の予約状況|"></p>
+    		</div>
+    		<div class="panel-body">
+    			<th:block th:unless="${#lists.isEmpty(reservations)}">
+					<table class="table table-bordered">
+    				<tr><th>時間帯</th><th>予約者</th><th>操作</th></tr>
+    				<tr th:each="obj : ${reservations}"><td th:text="|*{obj.startTime} - *{obj.endTime}|"></td><td th:text="|*{obj.user.lastName} *{obj.user.firstName}|"></td>
+    				<td valign ="top">
+    				<form th:action="@{'/reservations/{date}/{id}'(date=${date},id=${id})}" sec:authorize="hasRole('ADMIN')or #vars.obj.user.userId == #vars.user.userId" method="post">
+    				<input type="hidden" name = "yoyakuid" th:value = "${obj.reservationId}"/>
+    				<button type="submit" name = "cancel" class="btn btn-default">予約取消</button>
+    				</form></td></tr>
+    				</table>
+				</th:block>
+				<th:block th:if="${#lists.isEmpty(reservations)}">
+					<p>予約はありません</p>
+				</th:block>
+
+    		</div>
+    		<div class="panel-footer">
+				<form role="form" id="logout" th:action="@{/logout}" method="post">
+    			<button type="submit"class="btn btn-link">ログアウト</button>
+    			</form>
+			</div>
+    	</div>
+</body>
+</html>

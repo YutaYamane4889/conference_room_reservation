@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="../../static/js/jquery-2.2.4.min.js" th:src="@{/js/jquery-2.2.4.min.js}" ></script>
+	<script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" ></script>
+	<link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link href="../../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	<title data-th-text="|*{#temporals.format(date, 'yyyy/MM/dd')}の会議室|"></title>
+</head>
+<body>
+	<div class="container margin">
+	<div class="marginh">
+		<form th:action="@{/manage}" sec:authorize="hasRole('ADMIN')" method="get">
+    		<button type="submit" class="btn btn-default">ユーザ管理画面へ</button>
+    	</form>
+		<h2 class="form-signin-heading">会議室空き情報</h2>
+		<p>ご利用いただける会議室の一覧です。</p>
+		<div class="btn-group" role="group">
+			<p th:inline="text" class="mozipx">
+			<a th:href="@{'/rooms/{date}'(date=${date.minusDays(1)})}" class="btn btn-default bi bi-chevron-left marginb" style="width:125px">前日</a>
+			<strong>[[${#temporals.format(date, 'yyyy/MM/dd')}]]</strong>
+			<a th:href="@{'/rooms/{date}'(date=${date.plusDays(1)})}" class="btn btn-default marginb2" style="width:125px">翌日<i class="bi bi-chevron-right"></i></a></p>
+		</div>
+	</div>
+	<div class="panel panel-primary panelr">
+		<div class="panel-heading">
+			<p th:text="|*{#temporals.format(date, 'yyyy/MM/dd')} の会議室リスト|"></p>
+		</div>
+		<div class="panel-body">
+			<th:block th:unless="${#lists.isEmpty(datalist)}">
+				<p>利用したい会議室を選択してください</p>
+			</th:block>
+			<th:block th:if="${#lists.isEmpty(datalist)}">
+				<p>利用できる会議室はありません</p>
+			</th:block>
+		</div>
+		<ul class="list-group">
+			<tr th:each="obj : ${datalist}" class="list-group">
+			<a th:href="@{'/reservations/{date}/{id}'(date=${date},id=${obj.meetingRoom.roomId})}" th:text="${obj.meetingRoom.roomName}" class="list-group-item"></a>
+		</ul>
+		<div class="panel-footer">
+			<form role="form" id="logout" th:action="@{/logout}" method="post">
+    		<button type="submit"class="btn btn-link">ログアウト</button>
+    		</form>
+    	</div>
+    </div>
+</div>
+</body>
+</html>
